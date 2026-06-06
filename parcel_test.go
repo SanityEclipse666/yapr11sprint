@@ -36,6 +36,15 @@ func TestAddGetDelete(t *testing.T) {
 		require.NoError(t, err)
 	}
 	defer db.Close()
+	_, err = db.Exec(`
+CREATE TABLE IF NOT EXISTS parcel (
+	number INTEGER PRIMARY KEY AUTOINCREMENT,
+	client INTEGER,
+	status TEXT,
+	address TEXT,
+	created_at TEXT
+);`)
+	require.NoError(t, err)
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
